@@ -23,21 +23,23 @@ class MainActivity : ComponentActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
+                // TODO: show loading
                 RetrofitService.sync()
             }
-        }
 
-        setContent {
-            NekoTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
+            setContent {
+                NekoTheme {
+                    // A surface container using the 'background' color from the theme
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        Greeting("Android")
+                    }
                 }
             }
         }
+
     }
 }
 
