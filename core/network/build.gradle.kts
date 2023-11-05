@@ -1,11 +1,13 @@
 import org.jetbrains.kotlin.konan.properties.Properties
 
+// TODO: remove suppress
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    kotlin("plugin.serialization") version "1.8.10"
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.hilt)
     kotlin("kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -22,9 +24,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        val properties = Properties()
-        properties.load(project.rootProject.file("local.properties").inputStream())
-        val apiKey = properties.getProperty("API_KEY")
+        val apiKey = Properties().readLocalProperties(key = "API_KEY")
         buildConfigField("String", "API_KEY", "\"${apiKey}\"")
     }
 
@@ -42,17 +42,22 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation(libs.androidx.ktx)
+    implementation(libs.retrofit2)
+    implementation(libs.retrofit2.kotlin.serialization.converter)
+    implementation(libs.okhttp3)
+    implementation(libs.kotlinx.serialization)
+    implementation(libs.kotlinx.coroutines)
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+}
+
+fun Properties.readLocalProperties(key: String) = run {
+    this.load(project.rootProject.file("local.properties").inputStream())
+    return@run this.getProperty(key)
 }

@@ -1,8 +1,10 @@
+// TODO: remove suppress
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.hilt)
     kotlin("kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -36,7 +38,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
         compose = true
@@ -53,25 +55,28 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.7.0")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.lifecycle)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.ui.preview)
+    implementation(libs.material3)
+    implementation(libs.kotlinx.coroutines)
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+
     implementation(project(":core:network"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    testImplementation(libs.junit)
+
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.ui.test)
+
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
 
 // Allow references to generated code
