@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.konan.properties.Properties
 
-// TODO: remove suppress
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.library)
@@ -12,7 +11,7 @@ plugins {
 
 android {
     namespace = "io.github.shofucchi.network"
-    compileSdk = 33
+    compileSdk = 34
 
     buildFeatures {
         buildConfig = true

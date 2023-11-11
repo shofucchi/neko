@@ -1,4 +1,3 @@
-// TODO: remove suppress
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application)
@@ -9,12 +8,14 @@ plugins {
 
 android {
     namespace = "io.github.shofucchi.neko"
-    compileSdk = 33
+    compileSdkPreview = "UpsideDownCake"
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "io.github.shofucchi.neko"
         minSdk = 24
-        targetSdk = 33
+        targetSdkPreview = "UpsideDownCake"
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
