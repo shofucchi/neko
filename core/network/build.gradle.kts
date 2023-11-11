@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.konan.properties.Properties
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.hilt)
+    alias(libs.plugins.dagger.hilt)
     kotlin("kapt")
 }
 
@@ -21,20 +21,9 @@ android {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
 
         val apiKey = Properties().readLocalProperties(key = "API_KEY")
         buildConfigField("String", "API_KEY", "\"${apiKey}\"")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -52,8 +41,8 @@ dependencies {
     implementation(libs.okhttp3)
     implementation(libs.kotlinx.serialization)
     implementation(libs.kotlinx.coroutines)
-    implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
 }
 
 fun Properties.readLocalProperties(key: String) = run {
