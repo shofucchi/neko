@@ -2,8 +2,8 @@
 <resources>
 
     <style name="Theme.Neko" parent="Theme.Material3.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/m3_sys_color_dynamic_light_background</item>
-        <item name="android:navigationBarColor">@color/m3_sys_color_dynamic_light_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 

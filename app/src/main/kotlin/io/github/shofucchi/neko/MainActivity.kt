@@ -3,6 +3,7 @@ package io.github.shofucchi.neko
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -33,7 +34,7 @@ class MainActivity : ComponentActivity() {
 
             setContent {
                 NekoTheme {
-                    NekoApp()
+                    NekoApp(Modifier.fillMaxSize())
                 }
             }
         }
@@ -41,9 +42,10 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun NekoApp() {
+    private fun NekoApp(modifier: Modifier) {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier,
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
             topBar = { HomeAppBar() }
         ) {
             HomeScreen(modifier = Modifier.padding(it))
